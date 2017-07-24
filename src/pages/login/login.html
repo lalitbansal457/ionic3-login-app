@@ -14,5 +14,25 @@
 
 
 <ion-content padding>
+	<form (ngSubmit)="signInUser()" [formGroup]="loginForm">
+		<ion-list>
+		  <ion-item>
+		    <ion-label floating>Username</ion-label>
+		    <ion-input type="text" formControlName="username"></ion-input>
+		  </ion-item>
+		    <small *ngIf="loginForm.controls['username'].hasError('minlength') && loginForm.controls['username'].touched">Invalid username</small>
+
+		  <ion-item>
+		    <ion-label floating>Password</ion-label>
+		    <ion-input type="password" formControlName="password"></ion-input>
+		  </ion-item>
+		  <small *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['username'].touched">Password Must be at least 5 characters</small>
+		 
+		</ion-list>
+		<div padding>
+			<button ion-button full  type="submit">Sign in </button>
+		</div>
+	</form>
+	
 
 </ion-content>
