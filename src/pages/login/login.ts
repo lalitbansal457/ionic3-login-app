@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+
+//import {passwordPatternValidator} from '../../services/passwordPatternValidator';
 
 @Component({
   selector: 'page-login',
@@ -17,13 +19,13 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private formBuilder: FormBuilder) {
 	  	this.loginForm = formBuilder.group({
 	  		username: [null, Validators.compose([Validators.required, Validators.minLength(4)])],
-	  		password: [null, Validators.compose([Validators.required, Validators.minLength(4)])]
+	  		password: [null, Validators.compose([Validators.required, Validators.minLength(4), this.alphaNumeric])]
 	  	})
   }
 
   signInUser() {
   	this.show = true;
-  	console.log(this.loginForm, this.loginForm.controls.username.valid);
+  	console.log(this.loginForm, this.loginForm.controls.username.valid, this.loginForm.controls.password.errors);
   	/*console.log(this.user.value, this.password.value);
 
   	let alert = this.alertCtrl.create({
@@ -34,4 +36,18 @@ export class LoginPage {
 	  	alert.present();*/
   }
 
+  alphaNumeric(fieldControl: FormControl) : ValidationResult {
+		if(fieldControl.value == '' || /^[A-Za-z0-9_]+$/.test(fieldControl.value)) {
+			return { 'startsWithNumber': false };
+		}
+		return null;
+	}
+
+
+
+}
+
+
+interface ValidationResult {
+	[key:string]: boolean;
 }

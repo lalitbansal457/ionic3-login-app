@@ -26,8 +26,14 @@
 		    <ion-label floating>Password</ion-label>
 		    <ion-input type="password" formControlName="password"></ion-input>
 		  </ion-item>
-		  <small *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['username'].touched">Password Must be at least 5 characters</small>
-		 
+		  <p *ngIf="!loginForm.controls['password'].valid">
+		  	<small *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password required</small>
+		  	<small *ngIf="loginForm.controls['password'].hasError('minlength')">Password Must be 5 digit long</small>
+		  	<small *ngIf="!loginForm.controls['password'].hasError('startsWithNumber') && !loginForm.controls['password'].hasError('minlength') && !loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password Must be alphaNumeric</small>
+		  </p>
+		  
+		  
+
 		</ion-list>
 		<div padding>
 			<button ion-button full  type="submit">Sign in </button>
